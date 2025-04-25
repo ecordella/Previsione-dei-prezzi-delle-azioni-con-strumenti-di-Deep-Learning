@@ -1,20 +1,20 @@
 # Previsione dei prezzi delle azioni con strumenti di Deep Learning
 Progetto realizzato al termine dello "Short Master in Intelligenza Artificiale e Machine Learning - A.A. 2024/25" del Politecnico di Bari.
 
-Questo lavoro è stato realizzato nel corso del mese di aprile 2025 e ha preso in esame l'andamento dei prezzi delle azioni fino al 31 marzo 2025 ovvero fino al penutlimo giorno prima dell'introduzione, da parte del presidente degli Stati Uniti Donald Trump, dei dazi tariffari che hanno sconvolto tutte le principali borse mondiali con un impatto anomalo ed eccezionale suu tutti gli strumenti finanziari.
+Questo lavoro è stato realizzato nel corso del mese di aprile 2025 e ha preso in esame l'andamento dei prezzi delle azioni fino al 31 marzo 2025 ovvero fino al penultimo giorno prima dell'introduzione, da parte del presidente degli Stati Uniti Donald Trump, dei dazi tariffari che hanno sconvolto tutte le principali borse mondiali con un impatto anomalo ed eccezionale su tutti gli strumenti finanziari.
 
-Il presente elaborato ha una valenza esclusivamente sperimentale e ha il solo scopo di dimostrare le compentenza acquisite: non ha alcuna validità dal punto di vista dell'analisi finanziaria, né è da prendere in considerazione per attività di trading e/o per investimenti in borsa.
+Il presente elaborato ha una valenza esclusivamente sperimentale ed ha il solo scopo di dimostrare le competenze acquisite: non ha alcuna validità dal punto di vista dell'analisi finanziaria, né è da prendere in considerazione per attività di trading e/o per investimenti in borsa.
 
 Nel suo complesso il lavoro si compone di 3 programmi, scritti in Python, presenti nella cartella *src*:
 1. [**AnalisiMercatoAzionario.py**](#1-Analisi-del-Mercato-Azionario): analizza i dati di mercato azionario per 4 diverse aziende quotate sul mercato azionario NASDAQ (è aperto anche a titoli quotati su Borsa Italiana). Utilizza la libreria yfinance per scaricare i dati storici delle azioni e calcolare i rendimenti e i rischi associati. Il programma permette di visualizzare i grafici dei prezzi e dei volumi delle azioni, calcolare e visualizzare la distribuzione dei rendimenti giornalieri e identificare il miglior titolo in base all'Indice di Sharpe.
 
-2. [**PrevisionePrezzi_Keras.py**](#2-previsione-prezzi-con-keras): scarica i dati storici di un'azione (Apple nella fattispecie)da Yahoo Finance e utilizza la libreria Keras di TensorFlow per implementare un modello LSTM per prevedere i prezzi futuri dell'azione. Il modello viene addestrato sui dati storici e le previsioni vengono visualizzate in un grafico.
+2. [**PrevisionePrezzi_Keras.py**](#2-previsione-prezzi-con-keras): scarica i dati storici di un'azione (Apple nella fattispecie) da Yahoo Finance e utilizza la libreria Keras di TensorFlow per implementare un modello LSTM per prevedere i prezzi futuri dell'azione. Il modello viene addestrato sui dati storici e le previsioni vengono visualizzate in un grafico insieme ai valori reali del periodo di previsione.
 
-3. [**PrevisionePrezzy_PyTorch.py**](#3-previsione-prezzi-con-pytorch): utilizza PyTorch per costruire un modello LSTM (Long Short-Term Memory) per la previsione dei prezzi delle azioni. Il modello è addestrato su dati storici delle azioni scaricati da Yahoo Finance.
+3. [**PrevisionePrezzy_PyTorch.py**](#3-previsione-prezzi-con-pytorch): utilizza PyTorch per costruire un modello LSTM (Long Short-Term Memory) per la previsione dei prezzi delle azioni. Anche questo modello è addestrato su dati storici delle azioni scaricati da Yahoo Finance.
 
 
 ## 1. Analisi del Mercato Azionario
-Per recuperare le informazioni finanziarie relative alle azioni quotate sui principali mercati internazionali è stata usata la libreria yFinance, strumento open source che utilizza le API messa a disposizione da Yahoo! ai soli fini didattici e di ricerca.
+Per recuperare le informazioni finanziarie relative alle azioni quotate sui principali mercati internazionali è stata usata la libreria yFinance, strumento open source che utilizza le API messe a disposizione da Yahoo! ai soli fini didattici e di ricerca.
 
 Grazie a questa libreria, avendo a disposizione una grande profondità temporale e la massima ampiezza sulle informazioni finanziarie di tutti i mercati mondiali, abbiamo scelto di mettere a confronto quattro aziende e di scaricare i prezzi relativi alle loro azioni nel periodo che va dal 1 gennaio 2020 al 31 marzo 2025.
 
@@ -39,20 +39,22 @@ Tramite la libreria matplotlib, a partire dai dati scaricati allo step precedent
 
 ![Andamento Prezzi e Volumi delle azioni analizzate](/img/PrezziVolumi.png)
 
-Quella delle medie mobili è la famiglia degli indicatori tecnici più utilizzata perché consentono soprattutto di smussare le fluttuazioni erratiche dei prezzi e dare un'indicazione approssimativa dell'andamento dei prezzi.
+Quella delle medie mobili è la famiglia degli indicatori tecnici più utilizzata perché consentono di smussare le fluttuazioni erratiche dei prezzi e dare un'indicazione approssimativa dell'andamento dei prezzi.
 
-Dopo aver fatto l'analisi visiva dell'andamento delle azioni è stato approfondito il rischio di mercato dei singoli titoli e, quindi, l'andamento delle variazioni giornaliere di ogni singolo titolo.
-Tracciando istogrammi e curve di distribuzione normale si comprendono più facilmente i rendimenti tipici delle singole azioni (media) e il rischio associato (indicato dalla deviazione standard).
+Dopo aver fatto l'analisi visiva dell'andamento delle azioni è stato approfondito il rischio di mercato delle azioni prese in esame e, quindi, l'andamento delle variazioni giornaliere di ogni singolo titolo.
+Tracciando istogrammi e curve di distribuzione normale si comprendono più facilmente i rendimenti tipici delle singole azioni (media) ed il relativo rischio associato (indicato dalla deviazione standard).
 
 ![Frequenze Rendimenti giornalieri](/img/FrequenzeRendimenti.png)
 
-Dallo studio visivo dei rendimenti giornalieri delle 4 aziende, si nota facilmente che mediamente tutte e 4 producono un ritorno giornaliero degli investimenti intorno allo 0,1%, ma con un rischio abbastanza diversificato.
+Dallo studio visivo dei rendimenti giornalieri delle 4 azioni, si nota facilmente che mediamente tutte e 4 producono un ritorno giornaliero degli investimenti intorno allo 0,1%, ma con un rischio abbastanza diversificato.
 
 Per valutare e confrontare in maniera scientifica la performance di diversi investimenti, tenendo conto del loro livello di rischio, si utilizza l'indice di Sharpe ovvero una misura del rapporto rischio-rendimento (rispetto al tasso privo di rischio) per unità di rischio assunto. 
 Per calcolarlo, si utilizza la seguente formula:
+
 $$
 IS = (Rp - Rf) / σp
 $$
+
 Dove:
 
 &nbsp; &nbsp; Rp = rendimento dell'investimento o del portafoglio
@@ -74,9 +76,9 @@ Il programma genera, infine, un grafico relativo alla matrice Rischio-Rendimento
 
 
 ## 2. Previsione prezzi con Keras
-Dopo aver determinato il titolo con il rendimento più conveniente, viene stabilito di considerare i soli prezzi di chiusura di APPLE dal 1 gennaio 2020 fino al 31 marzo 2025 e di fissare a 50 giorni il periodo di osservazione per la determinazione delle sequenze di input.
+Dopo aver determinato il titolo con il rendimento più conveniente, viene stabilito di considerare i soli prezzi di chiusura delle azioni APPLE dal 1 gennaio 2020 fino al 31 marzo 2025 e di fissare a 50 giorni il periodo di osservazione per la determinazione delle sequenze di input.
 
-Per analizzare e modellare i dati sui prezzi delle azioni, i dati vengono scalati mediante l'estimatore ***MinMaxScaler*** della libreria *ski-kit learn*: rispetto ad altri scaler, come lo *StandardScaler*, che presuppone una distribuzione normale, il MinMaxScaler è la scelta più adatta perché preserva la forma della distribuzione originale ed è meno sensibile ai valori anomali.
+Per analizzare e modellare i dati sui prezzi delle azioni, i dati vengono scalati mediante l'estimatore *MinMaxScaler* della libreria *ski-kit learn*: rispetto ad altri scaler, come lo *StandardScaler*, che presuppone una distribuzione normale, il MinMaxScaler è la scelta più adatta perché preserva la forma della distribuzione originale ed è meno sensibile ai valori anomali.
 
 ```python
     scaler = MinMaxScaler(feature_range=(0,1))
