@@ -1,6 +1,3 @@
-# Previsione-dei-prezzi-delle-azioni-con-strumenti-di-Deep-Learning
-Repository del progetto finale dello Short Master in Intelligenza Artificiale e Machine Learning del Politecnico di Bari.
-=======
 # Previsione dei prezzi delle azioni con strumenti di Deep Learning
 Progetto realizzato al termine dello "Short Master in Intelligenza Artificiale e Machine Learning - A.A. 2024/25" del Politecnico di Bari.
 
@@ -314,4 +311,4 @@ REAL RMSE: 15.9605
 
 Il programma, alla fine, realizza un grafico mettendo insieme tutti i prezzi del titolo APPLE, sia quelli di training, sia quelli di test (reali) che le previsioni finali.
 
-![Previsione prezzi APPLE con PyTorch](/img/Pytorch_Previsioni_AAPL.png)
+![Previsione prezzi APPLE con PyTorch](/img/PyTorch_Previsioni_AAPL.png)
