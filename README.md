@@ -152,7 +152,7 @@ La libreria utilizzata in questo programma è stata Keras di TensorFlow.
 ```
 
 
-L'addestramento del nostro modello è stata effettuata con dimensione del batch pari ad 1 per un totale di 2 epoche.
+L'addestramento del nostro modello è stata effettuata con dimensione del batch pari ad 1 per un totale di 2 epoche (dalle prove è emerso che la convergenza si raggiunge già solo con 2 epoche).
 
 ```python
     model.fit(x_train, y_train, batch_size=1, epochs=2)
@@ -180,7 +180,7 @@ Test Loss: 0.0732
 Predizione completata!
 ```
 
-Dopo aver validato il nostro modello, a questo punto possiamo trasformare le predizioni e riportarle sulla scala dei valori di prezzo originale. A questo punto possiamo misurale il vero valore di RSME pari a 8,9060 (dollari)
+Dopo aver validato il nostro modello, a questo punto possiamo trasformare le predizioni e riportarle sulla scala dei valori di prezzo originale. A questo punto possiamo misurare il vero valore di RSME pari a 8,9060 (dollari)
 
 ```python
     # Utilizzo dello scaler per riconvertire le previsioni (da scalate) ai loro valori originali
@@ -204,7 +204,7 @@ Il terzo programma realizzato permette di fare delle previsioni con un modello d
 
 Anche in questo programma Python il titolo considerato è APPLE ed i prezzi e volumi scaricati con yfinance vanno dal 1 gennaio 2020 al 31 marzo 2025, fissando a 50 i giorni per la previsione finale.
 
-Anche in questo modulo, dopo aver rimodulato i dati con il MinMaxScaler, si creano i dataset di Training e di Test, rispettivamente per la fase di addestramento e di predizione finale.
+Anche in questo caso, dopo aver rimodulato i dati con il MinMaxScaler, si creano i dataset di Training e di Test, rispettivamente per la fase di addestramento e di predizione finale.
 
 Il modello di rete neurale, invece, è stato reso possibile con l'implementazione di una classe al cui interno sono stati definiti i seguenti layer:
  - Linear (da 1 a 32 neuroni)
@@ -229,8 +229,7 @@ class RNN_LSTM_Model(nn.Module):
         self.init_weights()
 
 ```
-L'addestramento del modello è stato effettuato per 5 epoche, tramite un dataloader con batch_size pari ad uno.
-L'ottimizzatore scelto è stato Adam; la metrica per la valutazione della loss è stata la MSE.
+L'addestramento del modello è stato effettuato per 5 epoche, tramite un dataloader con batch_size pari ad uno (dalle diverse prove fatte emerge che non è sufficiente andare oltre le 5 epcohe). L'ottimizzatore scelto è stato Adam; la metrica per la valutazione della loss è la MSE.
 
 ```python
     model.train()
@@ -314,3 +313,5 @@ REAL RMSE: 15.9605
 Il programma, alla fine, realizza un grafico mettendo insieme tutti i prezzi del titolo APPLE, sia quelli di training, sia quelli di test (reali) che le previsioni finali.
 
 ![Previsione prezzi APPLE con PyTorch](/img/PyTorch_Previsioni_AAPL.png)
+
+Dall'analisi visiva, la valutazione finale della previsione è tutto sommato discreta: le previsioni sono praticamente "sovrapponibili" nel primo periodo. Sono previsti picchi e discese, anche se con una certa distanza in termini di temporali. Il modello ha margini di miglioramento nel medio-lungo periodo.
